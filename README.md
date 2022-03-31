@@ -8,9 +8,15 @@ Add dependency to pubspec.yaml file
 
 
 ### Android
-You'll need to add the `SYSTEM_ALERT_WINDOW` permission to your Android Manifest.
+You'll need to add the `SYSTEM_ALERT_WINDOW` permission and `OverlayService` to your Android Manifest.
 ```XML
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <application>
+        ...
+        <service
+           android:name="com.phan_tech.flutter_overlay_apps.OverlayService"
+           android:exported="false" />
+    </application>
 ```
 
 ### Entry point
