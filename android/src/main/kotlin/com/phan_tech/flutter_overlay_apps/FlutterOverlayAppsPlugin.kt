@@ -16,10 +16,7 @@ import io.flutter.embedding.engine.dart.DartExecutor
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import io.flutter.plugin.common.BasicMessageChannel
-import io.flutter.plugin.common.JSONMessageCodec
-import io.flutter.plugin.common.MethodCall
-import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugin.common.*
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
@@ -39,6 +36,8 @@ class FlutterOverlayAppsPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
   }
 
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+    WindowSetup.messenger = messenger
+    WindowSetup.messenger!!.setMessageHandler(this)
     activity = binding.activity
     val enn = FlutterEngineGroup(context)
     val dEntry = DartExecutor.DartEntrypoint(

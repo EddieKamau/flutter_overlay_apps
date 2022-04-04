@@ -9,6 +9,8 @@ import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import io.flutter.embedding.android.FlutterView
 import io.flutter.embedding.engine.FlutterEngineCache
+import io.flutter.plugin.common.BasicMessageChannel
+import io.flutter.plugin.common.JSONMessageCodec
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
@@ -16,6 +18,7 @@ class OverlayService : Service() {
     private var windowManager: WindowManager? = null
     private lateinit var flutterView: FlutterView
     private val flutterChannel = MethodChannel(FlutterEngineCache.getInstance().get("my_engine_id")!!.dartExecutor, overlayAppMethodChannel)
+    private val overlayMessageChannel = BasicMessageChannel(FlutterEngineCache.getInstance().get("my_engine_id")!!.dartExecutor, overlayAppMessageChannel, JSONMessageCodec.INSTANCE)
 
     override fun onBind(intent: Intent?): IBinder? {
         // Not used
@@ -40,6 +43,7 @@ class OverlayService : Service() {
                 result.success(closed)
             }
         }
+        overlayMessageChannel.setMessageHandler(MyHandler())
 
 
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager?
@@ -60,4 +64,11 @@ class OverlayService : Service() {
         super.onDestroy()
         windowManager!!.removeView(flutterView)
     }
+}
+
+class MyHandler: BasicMessageChannel.MessageHandler<Any?>{
+    override fun onMessage(message: Any?, reply: BasicMessageChannel.Reply<Any?>) {
+        WindowSetup.messenger!!.send(message)
+    }
+
 }

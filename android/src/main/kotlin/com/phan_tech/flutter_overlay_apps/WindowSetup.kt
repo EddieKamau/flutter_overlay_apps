@@ -3,11 +3,13 @@ package com.phan_tech.flutter_overlay_apps
 import android.annotation.SuppressLint
 import android.view.Gravity
 import android.view.WindowManager
+import io.flutter.plugin.common.BasicMessageChannel
 
 object WindowSetup {
     var height: Int = -1
     var width: Int = WindowManager.LayoutParams.MATCH_PARENT
     var gravity: Int = Gravity.CENTER
+    var messenger : BasicMessageChannel<Any?>? = null
 
     @SuppressLint("RtlHardcoded")
     fun setGravityFromAlignment(alignment: String){
