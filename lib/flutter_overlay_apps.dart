@@ -49,16 +49,22 @@ class FlutterOverlayApps {
   }
 
   /// Streams message shared between overlay and main app
+  static final StreamController _controller = StreamController();
   static Stream<dynamic> overlayListener() {
-    StreamController _controller = StreamController();
     _overlayMessageChannel.setMessageHandler((message) async {
       _controller.add(message);
       return message;
     });
     return _controller.stream;
   }
+
+  /// dispose overlay controller
+  static void disposeOverlayListener() {
+    _controller.close();
+  }
 }
 
+/// Overlay alignment on screen
 enum OverlayAlignment {
   topLeft,
   topCenter,

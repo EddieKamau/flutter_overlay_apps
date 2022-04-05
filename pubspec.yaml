@@ -1,6 +1,6 @@
 name: flutter_overlay_apps
-description: Android plugin for displaying flutter app over other apps
-version: 1.0.0
+description: Android plugin for displaying flutter widgets over other apps
+version: 1.0.1
 homepage: https://github.com/EddieKamau/flutter_overlay_apps
 
 environment:
