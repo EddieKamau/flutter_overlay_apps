@@ -66,10 +66,7 @@ class FlutterOverlayAppsPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
     messenger = BasicMessageChannel(flutterPluginBinding.binaryMessenger, overlayAppMessageChannel, JSONMessageCodec.INSTANCE)
     messenger.setMessageHandler(this)
     this.context = flutterPluginBinding.applicationContext
-
   }
-
-
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
     when (call.method) {
@@ -85,20 +82,16 @@ class FlutterOverlayAppsPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
           val h = call.argument<Int>("height")
           val w = call.argument<Int>("width")
           val alignment = call.argument<String>("alignment")
+          val mode = call.argument<String>("mode")
 
           WindowSetup.width = w ?: -1
           WindowSetup.height = h ?: -1
           WindowSetup.setGravityFromAlignment(alignment ?: "center")
+          WindowSetup.setOverlayMode(mode ?: "belowStatusBar")
           activity.startService(Intent(context, OverlayService().javaClass))
           result.success(true)
         }
-
-
       }
-//      "closeOverlay" -> {
-//        val overlayChannel = MethodChannel(FlutterEngineCache.getInstance().get("my_engine_id")!!.dartExecutor, "com.phan_tech/overlay")
-//        overlayChannel.invokeMethod("close", null)
-//      }
       else -> {
         result.notImplemented()
       }
@@ -124,7 +117,4 @@ class FlutterOverlayAppsPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
         Uri.parse("package:${activity.packageName}"))
     )
   }
-
-
-
 }

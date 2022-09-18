@@ -10,8 +10,12 @@ void main() {
 // overlay entry point
 @pragma("vm:entry-point")
 void showOverlay() {
-  runApp(const MaterialApp(
-      debugShowCheckedModeBanner: false, home: MyOverlaContent()));
+  runApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MyOverlaContent(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -36,19 +40,23 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Center(
           child: ElevatedButton(
-              onPressed: () async {
-                // Open overlay
-                await FlutterOverlayApps.showOverlay(
-                    height: 300,
-                    width: 400,
-                    alignment: OverlayAlignment.center);
+            onPressed: () async {
+              // Open overlay
+              await FlutterOverlayApps.showOverlay(
+                height: 300,
+                width: 400,
+                alignment: OverlayAlignment.center,
+                mode: OverlayMode.belowStatusBar,
+              );
 
-                // send data to ovelay
-                await Future.delayed(const Duration(seconds: 2));
-                FlutterOverlayApps.sendDataToAndFromOverlay(
-                    "Hello from main app");
-              },
-              child: const Text("showOverlay")),
+              // send data to ovelay
+              await Future.delayed(const Duration(seconds: 2));
+              FlutterOverlayApps.sendDataToAndFromOverlay(
+                "Hello from main app",
+              );
+            },
+            child: const Text("showOverlay"),
+          ),
         ),
       ),
     );
@@ -90,10 +98,11 @@ class _MyOverlaContentState extends State<MyOverlaContent> {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Center(
-              child: Text(
-            _dataFromApp,
-            style: const TextStyle(color: Colors.red),
-          )),
+            child: Text(
+              _dataFromApp,
+              style: const TextStyle(color: Colors.red),
+            ),
+          ),
         ),
       ),
     );

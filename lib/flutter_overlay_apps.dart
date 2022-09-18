@@ -1,6 +1,6 @@
-import 'dart:async';
+import "dart:async";
 
-import 'package:flutter/services.dart';
+import "package:flutter/services.dart";
 
 const int overlaySizeFill = -1;
 const String _mainAppMethodChannel = "com.phan_tech./flutter_overlay_apps";
@@ -13,29 +13,43 @@ class FlutterOverlayApps {
   static const MethodChannel _channel = MethodChannel(_mainAppMethodChannel);
 
   // overlay methodChanel
-  static const MethodChannel _overlayChannel =
-      MethodChannel(_overlayAppMethodChannel);
+  static const MethodChannel _overlayChannel = MethodChannel(
+    _overlayAppMethodChannel,
+  );
+
   //Overlay BasicMessageChannel
-  static const BasicMessageChannel _overlayMessageChannel =
-      BasicMessageChannel(_overlayAppMessageChannel, JSONMessageCodec());
+  static const BasicMessageChannel _overlayMessageChannel = BasicMessageChannel(
+    _overlayAppMessageChannel,
+    JSONMessageCodec(),
+  );
 
   /// Open overLay content
   /// Takes optional;
   ///   - int [height] default is [overlaySizeFill]
   ///   - int [width] default is [overlaySizeFill]
   ///   - OverlayAlignment [width] default is [alignment] [OverlayAlignment.center]
-  static Future<bool?> showOverlay(
-      {int height = overlaySizeFill,
-      int width = overlaySizeFill,
-      OverlayAlignment alignment = OverlayAlignment.center}) async {
-    final bool? _res = await _channel.invokeMethod('showOverlay',
-        {"height": height, "width": width, "alignment": alignment.name});
+  ///   - OverlayMode default is [mode] [OverlayMode.belowStatusBar]
+  static Future<bool?> showOverlay({
+    int height = overlaySizeFill,
+    int width = overlaySizeFill,
+    OverlayAlignment alignment = OverlayAlignment.center,
+    OverlayMode mode = OverlayMode.belowStatusBar,
+  }) async {
+    final bool? _res = await _channel.invokeMethod(
+      "showOverlay",
+      {
+        "height": height,
+        "width": width,
+        "alignment": alignment.name,
+        "mode": mode.name,
+      },
+    );
     return _res;
   }
 
   /// Closes overlau if open
   static Future<bool?> closeOverlay() async {
-    final bool? _res = await _overlayChannel.invokeMethod('close');
+    final bool? _res = await _overlayChannel.invokeMethod("close");
     return _res;
   }
 
@@ -51,10 +65,12 @@ class FlutterOverlayApps {
   /// Streams message shared between overlay and main app
   static final StreamController _controller = StreamController();
   static Stream<dynamic> overlayListener() {
-    _overlayMessageChannel.setMessageHandler((message) async {
-      _controller.add(message);
-      return message;
-    });
+    _overlayMessageChannel.setMessageHandler(
+      (message) async {
+        _controller.add(message);
+        return message;
+      },
+    );
     return _controller.stream;
   }
 
@@ -74,5 +90,11 @@ enum OverlayAlignment {
   centerRight,
   bottomLeft,
   bottomCenter,
-  bottomRight
+  bottomRight,
+}
+
+/// Overlay mode on screen. Above or Below Status Bar
+enum OverlayMode {
+  belowStatusBar,
+  aboveStatusBar,
 }
