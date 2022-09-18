@@ -52,13 +52,12 @@ class OverlayService : Service() {
             WindowSetup.width,
             WindowSetup.height,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowSetup.flags,
             PixelFormat.TRANSLUCENT
         )
         params.gravity = WindowSetup.gravity
         windowManager!!.addView(flutterView, params)
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

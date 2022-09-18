@@ -10,6 +10,7 @@ object WindowSetup {
     var width: Int = WindowManager.LayoutParams.MATCH_PARENT
     var gravity: Int = Gravity.CENTER
     var messenger : BasicMessageChannel<Any?>? = null
+    var flags : Int = 0
 
     @SuppressLint("RtlHardcoded")
     fun setGravityFromAlignment(alignment: String){
@@ -45,8 +46,19 @@ object WindowSetup {
             alignment.lowercase() == "bottomRight".lowercase() -> {
                 gravity = Gravity.BOTTOM or Gravity.RIGHT
             }
+        }
+    }
 
+    @SuppressLint("RtlHardcoded")
+    fun setOverlayMode(mode: String) {
+        when {
+            mode.lowercase() == "underStatusBar".lowercase() -> {
+                flags = 0
+            }
+            mode.lowercase() == "aboveStatusBar".lowercase() -> {
+                flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
 
+            }
         }
     }
 }

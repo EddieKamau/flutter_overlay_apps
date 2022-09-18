@@ -2,8 +2,10 @@
 
 Android plugin for displaying flutter app over other apps
 
-## Usage
+## Added in this fork
+I added the ability for the overlay to be on top of the Android status bar, i.e. the overlay can now cover the entire screen.
 
+## Usage
 Add dependency to pubspec.yaml file
 
 
@@ -39,7 +41,7 @@ To open an overlay, call `FlutterOverlayApps.showOverlay()`.
 Default `height` & `width` is fill screen
 
 ```dart
-FlutterOverlayApps.showOverlay(height: 300, width: 400, alignment: OverlayAlignment.center);
+FlutterOverlayApps.showOverlay(height: 300, width: 400, alignment: OverlayAlignment.center, mode: OverlayMode.aboveStatusBar);
 ```
 
 To close the overlay widget call 
@@ -71,12 +73,13 @@ void main() {
 // overlay entry point
 @pragma("vm:entry-point")
 void showOverlay() {
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: MyOverlaContent()
-  ));
+  runApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MyOverlaContent(),
+    ),
+  );
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -93,7 +96,12 @@ class MyApp extends StatelessWidget {
             onPressed: () async {
 
               // Open overlay
-              await FlutterOverlayApps.showOverlay(height: 300, width: 400, alignment: OverlayAlignment.center);
+              await FlutterOverlayApps.showOverlay(
+                height: 300,
+                width: 400,
+                alignment: OverlayAlignment.center,
+                mode: OverlayMode.underStatusBar,
+              );
 
               // send data to ovelay
               await Future.delayed(const Duration(seconds: 2));
@@ -106,8 +114,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
 
 class MyOverlaContent extends StatefulWidget {
   const MyOverlaContent({ Key? key }) : super(key: key);
