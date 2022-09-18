@@ -3,10 +3,9 @@
 Android plugin for displaying flutter app over other apps
 
 ## Added in this fork
-added the ability for the overlay to overlay the android statusbar, ie the overlay can now cover the entire screen.
+I added the ability for the overlay to be on top of the Android status bar, i.e. the overlay can now cover the entire screen.
 
 ## Usage
-
 Add dependency to pubspec.yaml file
 
 
