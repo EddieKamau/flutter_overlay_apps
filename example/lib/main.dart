@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
                 height: 300,
                 width: 400,
                 alignment: OverlayAlignment.center,
-                mode: OverlayMode.belowStatusBar,
+                mode: OverlayMode.underStatusBar,
               );
 
               // send data to ovelay

@@ -87,7 +87,7 @@ class FlutterOverlayAppsPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
           WindowSetup.width = w ?: -1
           WindowSetup.height = h ?: -1
           WindowSetup.setGravityFromAlignment(alignment ?: "center")
-          WindowSetup.setOverlayMode(mode ?: "belowStatusBar")
+          WindowSetup.setOverlayMode(mode ?: "underStatusBar")
           activity.startService(Intent(context, OverlayService().javaClass))
           result.success(true)
         }

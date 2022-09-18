@@ -33,7 +33,7 @@ class FlutterOverlayApps {
     int height = overlaySizeFill,
     int width = overlaySizeFill,
     OverlayAlignment alignment = OverlayAlignment.center,
-    OverlayMode mode = OverlayMode.belowStatusBar,
+    OverlayMode mode = OverlayMode.underStatusBar,
   }) async {
     final bool? _res = await _channel.invokeMethod(
       "showOverlay",
@@ -95,6 +95,6 @@ enum OverlayAlignment {
 
 /// Overlay mode on screen. Above or Below Status Bar
 enum OverlayMode {
-  belowStatusBar,
+  underStatusBar,
   aboveStatusBar,
 }

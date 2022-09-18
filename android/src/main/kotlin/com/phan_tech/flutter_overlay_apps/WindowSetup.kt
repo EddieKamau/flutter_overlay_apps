@@ -52,7 +52,7 @@ object WindowSetup {
     @SuppressLint("RtlHardcoded")
     fun setOverlayMode(mode: String) {
         when {
-            mode.lowercase() == "belowStatusBar".lowercase() -> {
+            mode.lowercase() == "underStatusBar".lowercase() -> {
                 flags = 0
             }
             mode.lowercase() == "aboveStatusBar".lowercase() -> {
