@@ -51,10 +51,12 @@ class OverlayService : Service() {
         val params = WindowManager.LayoutParams(
             WindowSetup.width,
             WindowSetup.height,
-            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+            else WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
             PixelFormat.TRANSLUCENT
         )
+        params.flags = params.flags and WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE.inv()
         params.gravity = WindowSetup.gravity
         windowManager!!.addView(flutterView, params)
     }
