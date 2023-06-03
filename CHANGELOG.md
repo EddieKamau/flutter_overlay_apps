@@ -1,3 +1,7 @@
+## 1.1.2
+
+* exposed overlay StreamController
+
 ## 1.0.2
 
 * enabled keyboard input

@@ -50,12 +50,12 @@ class FlutterOverlayApps {
 
   /// Streams message shared between overlay and main app
   static final StreamController _controller = StreamController();
-  static Stream<dynamic> overlayListener() {
+  static StreamController overlayListener() {
     _overlayMessageChannel.setMessageHandler((message) async {
       _controller.add(message);
       return message;
     });
-    return _controller.stream;
+    return _controller;
   }
 
   /// dispose overlay controller

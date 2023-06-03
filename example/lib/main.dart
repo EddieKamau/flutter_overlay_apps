@@ -64,17 +64,25 @@ class MyOverlaContent extends StatefulWidget {
 
 class _MyOverlaContentState extends State<MyOverlaContent> {
   String _dataFromApp = "Hey send data";
+  late final StreamController overlayStream;
 
   @override
   void initState() {
     super.initState();
 
     // lisent for any data from the main app
-    FlutterOverlayApps.overlayListener().listen((event) {
+    overlayStream = FlutterOverlayApps.overlayListener();
+    overlayStream.stream.listen((event) {
       setState(() {
         _dataFromApp = event.toString();
       });
     });
+  }
+
+  @override
+  void dispose() {
+    overlayStream.close();
+    super.dispose();
   }
 
   @override
