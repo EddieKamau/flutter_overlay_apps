@@ -24,12 +24,18 @@ class FlutterOverlayApps {
   ///   - int [height] default is [overlaySizeFill]
   ///   - int [width] default is [overlaySizeFill]
   ///   - OverlayAlignment [width] default is [alignment] [OverlayAlignment.center]
+  ///   - bool [closeOnBackButton] default is `true`
   static Future<bool?> showOverlay(
       {int height = overlaySizeFill,
       int width = overlaySizeFill,
+      bool closeOnBackButton = true,
       OverlayAlignment alignment = OverlayAlignment.center}) async {
-    final bool? _res = await _channel.invokeMethod('showOverlay',
-        {"height": height, "width": width, "alignment": alignment.name});
+    final bool? _res = await _channel.invokeMethod('showOverlay', {
+      "height": height,
+      "width": width,
+      "alignment": alignment.name,
+      "closeOnBackButton": closeOnBackButton
+    });
     return _res;
   }
 

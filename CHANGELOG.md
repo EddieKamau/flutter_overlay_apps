@@ -1,3 +1,8 @@
+## 1.2.0
+
+* Upgraded gradle
+* Added Back Button navigation action
+
 ## 1.1.2
 
 * exposed overlay StreamController

@@ -151,4 +151,29 @@ class _MyOverlaContentState extends State<MyOverlaContent> {
 }
 ```
 
+## Android back button  
+The back navigation button on android will close the overlay app. To prevent this, set `closeOnBackButton` to `false`. Example;
+
+```dart
+await FlutterOverlayApps.showOverlay(
+  height: 300,
+  closeOnBackButton: false,
+  alignment: OverlayAlignment.center);
+```
+
+When `closeOnBackButton` is set to `false`, an action will be sent via the stream controller. You can get the action like the example below;
+
+```dart
+var overlayStreamController = FlutterOverlayApps.overlayListener();
+
+overlayStreamController.stream.listen((event) {
+  if(event['method'] == 'backButton'){
+    // handle back button 
+    if(mounted && Navigator.of(context).canPop()){
+      Navigator.of(context).pop();
+    }
+  }
+})
+```
+
 Support the plugin <a href="https://www.buymeacoffee.com/EddieGenius" target="_blank"><img src="https://i.imgur.com/aV6DDA7.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important; box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" > </a>

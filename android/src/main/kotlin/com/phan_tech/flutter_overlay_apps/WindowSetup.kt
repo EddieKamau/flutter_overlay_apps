@@ -10,6 +10,7 @@ object WindowSetup {
     var width: Int = WindowManager.LayoutParams.MATCH_PARENT
     var gravity: Int = Gravity.CENTER
     var messenger : BasicMessageChannel<Any?>? = null
+    var closeOnBackButton : Boolean = true;
 
     @SuppressLint("RtlHardcoded")
     fun setGravityFromAlignment(alignment: String){

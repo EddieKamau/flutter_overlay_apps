@@ -85,9 +85,11 @@ class FlutterOverlayAppsPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
           val h = call.argument<Int>("height")
           val w = call.argument<Int>("width")
           val alignment = call.argument<String>("alignment")
+          val closeOnBackButton = call.argument<Boolean>("closeOnBackButton")
 
           WindowSetup.width = w ?: -1
           WindowSetup.height = h ?: -1
+          WindowSetup.closeOnBackButton = closeOnBackButton ?: true
           WindowSetup.setGravityFromAlignment(alignment ?: "center")
           activity.startService(Intent(context, OverlayService().javaClass))
           result.success(true)

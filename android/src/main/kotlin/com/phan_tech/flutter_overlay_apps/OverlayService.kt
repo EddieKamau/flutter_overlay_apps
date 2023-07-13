@@ -5,7 +5,9 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
+import android.view.KeyEvent
 import android.view.WindowManager
+import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import io.flutter.embedding.android.FlutterView
 import io.flutter.embedding.engine.FlutterEngineCache
@@ -13,6 +15,8 @@ import io.flutter.plugin.common.BasicMessageChannel
 import io.flutter.plugin.common.JSONMessageCodec
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
+import org.json.JSONObject
+
 
 class OverlayService : Service() {
     private var windowManager: WindowManager? = null
@@ -32,7 +36,24 @@ class OverlayService : Service() {
         val engine = FlutterEngineCache.getInstance().get("my_engine_id")!!
         engine.lifecycleChannel.appIsResumed()
 
-        flutterView = FlutterView(applicationContext)
+        flutterView = object: FlutterView(applicationContext){
+            override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+                return if (event.keyCode == KeyEvent.KEYCODE_BACK) {
+                    // handle the back button code;
+                    if(WindowSetup.closeOnBackButton){
+                        stopService(Intent(baseContext, OverlayService().javaClass))
+                        windowManager?.removeView(flutterView)
+                    }else{
+                        // send message
+                        overlayMessageChannel.send(JSONObject("{\"method\": \"backButton\"}"))// {"method" "backButton"}
+
+                    }
+
+                    true
+                } else super.dispatchKeyEvent(event)
+            }
+
+        }
 
         flutterView.attachToFlutterEngine(FlutterEngineCache.getInstance().get("my_engine_id")!!)
         flutterView.fitsSystemWindows = true
